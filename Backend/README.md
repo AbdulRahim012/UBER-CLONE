@@ -125,3 +125,118 @@ The request body must include the following fields:
 - Ensure `JWT_SECRET` is set in the environment variables for token generation.
 - Passwords are stored securely using bcrypt hashing.
 - Responses do not include sensitive information like the password.
+
+# API Documentation for `/user/login` Endpoint
+
+## **Endpoint**
+`POST /user/login`
+
+---
+
+## **Description**
+This endpoint allows an existing user to log in by providing their email and password. If the credentials are valid, a JWT token is returned for authentication.
+
+---
+
+## **Request Body**
+The request body must include the following fields:
+
+### **Schema**
+
+| Field     | Type   | Required | Validation                     | Description                        |
+|-----------|--------|----------|---------------------------------|------------------------------------|
+| `email`   | String | Yes      | Valid email format             | The user's registered email        |
+| `password`| String | Yes      | Minimum length: 6 characters   | The user's account password        |
+
+### **Example Request Body**
+```json
+{
+    "email": "john.doe@example.com",
+    "password": "securepassword123"
+}
+```
+
+---
+
+## **Response**
+### **Success Response**
+- **Status Code**: `200 OK`
+- **Description**: Login successful. Returns a JWT token and basic user information.
+
+#### **Example**
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+        "fullname": {
+            "firstname": "John",
+            "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "socketId": null,
+        "_id": "64ef92baf5468c30d1234567",
+        "__v": 0
+    }
+}
+```
+
+### **Validation Errors**
+- **Status Code**: `400 Bad Request`
+- **Description**: One or more validation errors occurred in the request body.
+
+#### **Example**
+```json
+{
+    "errors": [
+        {
+            "msg": "Invalid Email",
+            "param": "email",
+            "location": "body"
+        },
+        {
+            "msg": "Password must be at least 6 characters long",
+            "param": "password",
+            "location": "body"
+        }
+    ]
+}
+```
+
+### **Unauthorized Error**
+- **Status Code**: `401 Unauthorized`
+- **Description**: Incorrect email or password.
+
+#### **Example**
+```json
+{
+    "message": "Invalid email or password"
+}
+```
+
+---
+
+## **Business Logic Overview**
+1. **Validation**: Input fields are validated using `express-validator`.
+2. **Email Check**: Verifies that a user with the given email exists.
+3. **Password Comparison**: Uses `bcrypt` to compare the hashed password in the database with the provided password.
+4. **Token Generation**: Generates a JWT token for the authenticated user.
+5. **Response**: Sends the token and user data (excluding the password) in the response.
+
+---
+
+## **Implementation Details**
+### **Controller: `loginUser`**
+- Handles the business logic for user login.
+- Validates input, checks user existence, compares passwords, and generates a token.
+
+### **Validation Middleware**
+- Uses `express-validator` to ensure:
+  - `email` is valid.
+  - `password` is at least 6 characters long.
+
+---
+
+## **Notes**
+- Ensure `JWT_SECRET` is set in the environment variables for token generation.
+- Password comparison is done securely using bcrypt.
+- Responses do not include sensitive information like the password.
