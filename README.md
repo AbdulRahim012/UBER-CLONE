@@ -1,7 +1,7 @@
-# API Documentation for `/user/register` Endpoint
+# API Documentation for `/users/register` Endpoint
 
 ## **Endpoint**
-`POST /user/register`
+`POST /users/register`
 
 ---
 
@@ -126,10 +126,10 @@ The request body must include the following fields:
 - Passwords are stored securely using bcrypt hashing.
 - Responses do not include sensitive information like the password.
 
-# API Documentation for `/user/login` Endpoint
+# API Documentation for `/users/login` Endpoint
 
 ## **Endpoint**
-`POST /user/login`
+`POST /users/login`
 
 ---
 
@@ -241,10 +241,10 @@ The request body must include the following fields:
 - Password comparison is done securely using bcrypt.
 - Responses do not include sensitive information like the password.
 
-# API Documentation for `/user/profile` Endpoint
+# API Documentation for `/users/profile` Endpoint
 
 ## **Endpoint**
-`GET /user/profile`
+`GET /users/profile`
 
 ---
 
@@ -300,10 +300,10 @@ The request must include the following header:
 ---
 
 
-# API Documentation for `/user/logout` Endpoint
+# API Documentation for `/users/logout` Endpoint
 
 ## **Endpoint**
-`GET /user/logout`
+`GET /users/logout`
 
 ---
 
@@ -382,3 +382,4 @@ The request body must contain a JSON object with the following fields:
     "vehicleType": "string"  // Required: Vehicle type: 'car', 'motorcycle', or 'auto'
   }
 }
+
