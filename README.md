@@ -352,3 +352,33 @@ Authorization: Bearer <JWT_TOKEN>
 ```
 
 ---
+
+# Captain Registration API Documentation
+
+This document outlines the usage and details of the `/captains/register` endpoint for registering a new captain (driver) in the system. It details the required fields, validation rules, possible responses, and status codes.
+
+## Endpoint: `POST /captains/register`
+
+### Description
+
+The `POST /captains/register` endpoint allows new captains to register by providing their personal and vehicle information. It validates the provided data, creates a new captain entry in the database, and returns a **JWT token** for future authentication.
+
+### Request Body
+
+The request body must contain a JSON object with the following fields:
+
+```json
+{
+  "fullname": {
+    "firstname": "string",  // Required: First name (min 3 characters)
+    "lastname": "string"    // Optional: Last name (min 3 characters)
+  },
+  "email": "string",         // Required: Valid email address
+  "password": "string",      // Required: Password (min 6 characters)
+  "vehicle": {
+    "color": "string",       // Required: Vehicle color (min 3 characters)
+    "plate": "string",       // Required: Vehicle plate number (min 3 characters)
+    "capacity": "number",    // Required: Vehicle capacity (min 1)
+    "vehicleType": "string"  // Required: Vehicle type: 'car', 'motorcycle', or 'auto'
+  }
+}
